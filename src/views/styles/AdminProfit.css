@@ -1,0 +1,168 @@
+/* General page container */
+.admin-profit {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #1a202c;
+  color: white;
+}
+
+/* Page title */
+.admin-profit h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e2e8f0;
+}
+
+/* Chart container */
+.chart-wrapper {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+/* Loading and error states */
+.admin-profit .loading, .admin-profit .error {
+  text-align: center;
+  padding: 1rem;
+  color: #facc15;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-profit {
+    padding: 1rem;
+  }
+
+  .admin-profit h1 {
+    font-size: 1.5rem;
+  }
+
+  .chart-wrapper {
+    padding: 0.75rem;
+    max-width: 100%;
+    height: 200px;
+  }
+}
+
+/* Monthly Analysis Container */
+.monthly-analysis {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.monthly-analysis h2 {
+  font-size: 1.5rem;
+  color: #e2e8f0;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.analysis-list {
+  list-style: none;
+  padding: 0;
+}
+
+.analysis-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.analysis-item:last-child {
+  border-bottom: none;
+}
+
+.activity-name {
+  color: #93c5fd; 
+  font-weight: bold;
+}
+
+.activity-amount {
+  color: #93c5fd; 
+}
+
+.see-more-button {
+  display: block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6; /* Blue button */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.see-more-button:hover {
+  background-color: #2563eb; /* Darker blue on hover */
+}
+
+.analysis-summary {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.analysis-summary p {
+  margin: 0.5rem 0;
+  color: #facc15; /* Yellow for summary */
+}
+
+.month-navigation {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-button {
+  padding: 0.5rem 1rem;
+  background-color: #4a5568; /* Gray for navigation */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: #2d3748; /* Darker gray on hover */
+}
+
+@media (max-width: 768px) {
+  .monthly-analysis {
+    padding: 1rem;
+  }
+
+  .monthly-analysis h2 {
+    font-size: 1.2rem;
+  }
+
+  .analysis-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .activity-amount {
+    margin-top: 0.5rem;
+  }
+
+  .see-more-button, .nav-button {
+    width: 48%;
+  }
+}

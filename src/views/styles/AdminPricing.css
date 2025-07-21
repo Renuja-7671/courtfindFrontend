@@ -1,0 +1,284 @@
+.admin-pricing-container {
+  padding: 20px;
+  color: white;
+}
+
+.admin-pricing-container h1 {
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+.pricing-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.pricing-header {
+  display: flex;
+  background-color: #1e293b;
+  padding: 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #2d3a50;
+}
+
+.pricing-row {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.pricing-column {
+  display: flex;
+  align-items: center;
+}
+
+.activity-column {
+  flex: 3;
+}
+
+.price-column {
+  flex: 1;
+  justify-content: center;
+}
+
+.actions-column {
+  flex: 2;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.update-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  min-height: 50px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.price-input {
+  width: 100px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #495057;
+  background-color: #1e293b;
+  color: white;
+}
+
+.add-activity-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.add-form {
+  background-color: #1e293b;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.add-form h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #495057;
+  background-color: #0a1120;
+  color: white;
+}
+
+.activity-input {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #495057;
+  background-color: #1e293b;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.page-btn {
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 5px;
+}
+
+.page-number {
+  background-color: #1e293b;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-number.active {
+  background-color: #8b0000;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-buttons .save-btn,
+.form-buttons .cancel-btn {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 80px;
+  min-height: 50px;
+  line-height: 16px;
+  box-sizing: border-box;
+}
+
+.form-buttons .save-btn {
+  background-color: #28a745;
+  color: white;
+  margin-right: 8px;
+}
+
+.form-buttons .cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  margin-right: 0;
+}
+
+.form-buttons .save-btn:hover {
+  background-color: #218838;
+}
+
+.form-buttons .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+.edit-actions {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.edit-actions .save-btn,
+.edit-actions .cancel-btn {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  min-width: 60px;
+  min-height: 32px;
+  line-height: 16px;
+  box-sizing: border-box;
+}
+
+.edit-actions .save-btn {
+  background-color: #28a745;
+  color: white;
+  margin-right: 8px;
+}
+
+.edit-actions .cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  margin-right: 0;
+}
+
+.edit-actions .save-btn:hover {
+  background-color: #218838;
+}
+
+.edit-actions .cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+.actions-column {
+  flex: 2;
+  justify-content: flex-end;
+  min-width: 180px;
+}
+
+.regular-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.update-btn,
+.delete-btn {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

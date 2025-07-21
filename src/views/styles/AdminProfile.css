@@ -1,0 +1,93 @@
+.admin-profile-container {
+    background-color: #0a1735;
+    color: white;
+    padding: 2rem;
+    margin: 7rem;
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .profile-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .profile-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: pink; 
+  }
+  
+  .profile-details {
+    flex-grow: 1;
+  }
+  
+  .profile-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .field-label {
+    width: 100px;
+    font-weight: bold;
+  }
+  
+  .field-value {
+    flex-grow: 1;
+    font-size: 1.2rem;
+  }
+  
+  .field-value input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .update-btn {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+  
+  .update-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .save-btn {
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 2rem;
+  }
+  .name-inputs {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .name-inputs input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
