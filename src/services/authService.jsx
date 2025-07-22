@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/AuthContext"; // Use global auth state
 export const registerUser = async (userData) => {
   try {
     const response = await api.post("/auth/register", userData);
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Register Error:", error); // Debugging line
