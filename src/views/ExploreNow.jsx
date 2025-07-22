@@ -137,7 +137,7 @@ const ExploreNow = () => {
                                 <div style={{ height: "200px", overflow: "hidden" }}>
                                     <Card.Img
                                         variant="top"
-                                        src={`${API_URL+arena.image_url}`}
+                                        src={`${arena.image_url}`}
                                         style={{ objectFit: "cover", height: "100%", width: "100%" }}
                                     />
                                 </div>

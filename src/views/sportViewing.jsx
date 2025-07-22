@@ -257,7 +257,7 @@ const handleViewReviews = () => {
                   <Carousel.Item key={idx}>
                     <img
                       className="d-block w-100"
-                      src={`${API_URL}/${img}`}
+                      src={`${img}`}
                       alt={`Court image ${idx + 1}`}
                       style={{ height: '400px', objectFit: 'cover', borderRadius: '15px' }}
                     />
