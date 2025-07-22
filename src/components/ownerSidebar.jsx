@@ -5,8 +5,11 @@ import { FaTachometerAlt, FaUser, FaCalendarAlt, FaPlusCircle, FaChartLine, FaCo
 import { FaCodePullRequest } from "react-icons/fa6";
 import { getOwnerProfile, getProfileImage } from "../services/ownerAuthService";
 import { useAuth } from "../contexts/AuthContext";
+import {REACT_APP_API_BASE_URL} from '../config';
+
 
 const Sidebar = () => {
+    const API_URL = REACT_APP_API_BASE_URL;
     const location = useLocation();
     const { authToken } = useAuth();
     const [profile, setProfile] = useState({
@@ -26,7 +29,7 @@ const Sidebar = () => {
                     const data = await getOwnerProfile(authToken);
                     setProfile(data);
                     const imageUrl = await getProfileImage(authToken);
-                    setProfileImage(`${process.env.REACT_APP_API_BASE_URL}${imageUrl}`);
+                    setProfileImage(`${API_URL+imageUrl}`);
                 } catch (error) {
                     console.error("Error fetching profile:", error);
                 }

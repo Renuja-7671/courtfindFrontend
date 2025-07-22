@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Container, Card, Spinner, Alert, Badge, Row, Col } from 'react-bootstrap';
 import { getPlayerBookings } from '../services/playerAuthService';
 import Sidebar from '../components/playerSidebar';
+import {REACT_APP_API_BASE_URL} from '../config';
 
 const PlayerDashboard = () => {
+    const API_URL = REACT_APP_API_BASE_URL;
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -63,7 +65,7 @@ const PlayerDashboard = () => {
                                 <Row className="g-0">
                                     <Col md={3}>
                                         <Card.Img 
-                                            src={`${process.env.REACT_APP_API_BASE_URL}${booking.image_url}`} 
+                                            src={`${API_URL+booking.image_url}`} 
                                             alt="Arena"
                                             style={{ height: '100%', objectFit: 'cover' }}
                                         />

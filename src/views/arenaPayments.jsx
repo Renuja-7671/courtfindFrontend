@@ -11,6 +11,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { FaCreditCard, FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover } from "react-icons/fa";
+import {REACT_APP_API_BASE_URL} from '../config';
 
 const stripePromise = loadStripe("pk_test_51RirFIFwBYKnL5Z3swzBJJ1N9TUIe9fIJKvXcnw6NH1V3pSWagHy9fHBiuIbMAEsKj6rvxIyUyGBde8CCvy0arXB00ToVFYydf");
 
@@ -40,6 +41,7 @@ const brandIcons = {
 };
 
 const CheckoutForm = () => {
+  const API_URL = REACT_APP_API_BASE_URL;
   const { arenaId, price } = useParams();
   const stripe = useStripe();
   const elements = useElements();
@@ -85,7 +87,7 @@ const CheckoutForm = () => {
     if (!stripe || !elements) return;
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/stripe/create-payment-intent`, {
+      const res = await fetch(`${API_URL}/api/stripe/create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: amountInCents }),

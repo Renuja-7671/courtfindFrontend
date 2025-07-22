@@ -3,9 +3,11 @@ import { Container, Card, Spinner, Alert, Row, Col, Button } from 'react-bootstr
 import { getPlayerInvoices } from '../services/playerAuthService';
 import Sidebar from '../components/playerSidebar';
 import { BsDownload } from 'react-icons/bs';
+import {REACT_APP_API_BASE_URL} from '../config';
 
 const PlayerInvoices = () => {
     // State to store invoices data
+    const API_URL = REACT_APP_API_BASE_URL;
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(true); // To show loading spinner
     const [error, setError] = useState(''); // To store any error messages
@@ -29,7 +31,7 @@ const PlayerInvoices = () => {
 
     // Handle file download with file existence check
     const handleDownload = async (url, name, bookingDate) => {
-        const fullUrl = `${process.env.REACT_APP_API_BASE_URL}${url}`; // Full file path
+        const fullUrl = `${API_URL+url}`; // Full file path
 
         try {
             const response = await fetch(fullUrl, { method: 'HEAD' });
@@ -81,7 +83,7 @@ const PlayerInvoices = () => {
                                             {/* Arena Image */}
                                             <Col md={3}>
                                                 <Card.Img
-                                                    src={`${process.env.REACT_APP_API_BASE_URL}${invoice.image_url}`}
+                                                    src={`${API_URL+invoice.image_url}`}
                                                     alt="Arena"
                                                     style={{ height: '100%', objectFit: 'cover' }}
                                                 />

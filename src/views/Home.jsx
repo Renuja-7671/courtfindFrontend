@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getArenaByRating, getSportForHome } from '../services/arenaService';
+import {REACT_APP_API_BASE_URL} from '../config';
+
+
 
 const Homepage = () => {
+    const API_URL = REACT_APP_API_BASE_URL;
     const navigate = useNavigate();
     const [arenas, setArenas] = useState([]);
     const [sports, setSports] = useState([]);
@@ -95,7 +99,7 @@ const Homepage = () => {
         <div className="homepage">
             {/* Hero Section */}
             <section className="hero-section text-center text-white py-5" style={{
-                background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(`${process.env.REACT_APP_API_BASE_URL}/uploads/home.png`)',
+                background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${API_URL}/uploads/home.png)`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: '400px'
@@ -266,7 +270,7 @@ const Homepage = () => {
                                         style={{ cursor: 'pointer', overflow: 'hidden' }}
                                     >
                                         <img 
-                                            src={arena.image_url ? `${process.env.REACT_APP_API_BASE_URL}${arena.image_url}` : "https://via.placeholder.com/300x200?text=Arena+Image"}
+                                            src={arena.image_url ? `${API_URL+arena.image_url}` : "https://via.placeholder.com/300x200?text=Arena+Image"}
                                             className="card-img-top"
                                             alt={arena.name}
                                             style={{ height: '200px', objectFit: 'cover' }}

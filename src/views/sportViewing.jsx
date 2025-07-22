@@ -11,10 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { motion } from "framer-motion";
+import {REACT_APP_API_BASE_URL} from '../config';
 
 
 
 const ViewingPage = () => {
+  const API_URL = REACT_APP_API_BASE_URL;
   const { courtId } = useParams();
   const [court, setCourt] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -255,7 +257,7 @@ const handleViewReviews = () => {
                   <Carousel.Item key={idx}>
                     <img
                       className="d-block w-100"
-                      src={`${process.env.REACT_APP_API_BASE_URL}/${img}`}
+                      src={`${API_URL}/${img}`}
                       alt={`Court image ${idx + 1}`}
                       style={{ height: '400px', objectFit: 'cover', borderRadius: '15px' }}
                     />

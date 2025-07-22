@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Table, Container, Alert, Spinner, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import { getPendingArenasForOwner, getPricingForNewArena, getArenasForOwnerWithStatus } from "../services/ownerService";
 import Sidebar from "../components/ownerSidebar";
+import {REACT_APP_API_BASE_URL} from '../config';
 
 
 const PendingArenasPage = () => {
+  const API_URL = REACT_APP_API_BASE_URL;
   const [pendingArenas, setPendingArenas] = useState([]);
   const [paymentPendingArenas, setPaymentPendingArenas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -104,7 +106,7 @@ const PendingArenasPage = () => {
                         <td>
                         {arena.image_url ? (
                             <img
-                            src={`${process.env.REACT_APP_API_BASE_URL}${arena.image_url}`}
+                            src={`${API_URL+arena.image_url}`}
                             alt={arena.arenaName}
                             width="100"
                             height="70"

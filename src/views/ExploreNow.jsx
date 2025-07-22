@@ -4,8 +4,10 @@ import { FaSearch } from "react-icons/fa";
 import { getAllArenas, searchArenas } from "../services/arenaService";
 import { MdOutlineSportsScore } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {REACT_APP_API_BASE_URL} from '../config';
 
 const ExploreNow = () => {
+    const API_URL = REACT_APP_API_BASE_URL;
     const [arenas, setArenas] = useState([]);
     const [filters, setFilters] = useState({ sport: "", venue: "" });
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ const ExploreNow = () => {
             if (sportId) {
                 try {
                     //console.log("Fetching sport for sportId:", sportId); // Debug log
-                    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/common/sport`);
+                    const response = await fetch(`${API_URL}/common/sport`);
                     const sports = await response.json();
                     //console.log("Sports data:", sports); // Debug log
                     updatedSport = sports.find(s => s.id === parseInt(sportId))?.name || "";
@@ -135,7 +137,7 @@ const ExploreNow = () => {
                                 <div style={{ height: "200px", overflow: "hidden" }}>
                                     <Card.Img
                                         variant="top"
-                                        src={`${process.env.REACT_APP_API_BASE_URL}${arena.image_url}`}
+                                        src={`${API_URL+arena.image_url}`}
                                         style={{ objectFit: "cover", height: "100%", width: "100%" }}
                                     />
                                 </div>

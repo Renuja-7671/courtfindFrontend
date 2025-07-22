@@ -4,9 +4,11 @@ import { getPlayerProfile, updatePlayerProfile, uploadProfileImage, getProfileIm
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/playerSidebar";
+import {REACT_APP_API_BASE_URL} from '../config';
 
 
 const PlayerProfile = () => {
+    const API_URL = REACT_APP_API_BASE_URL;
     const navigate = useNavigate();
     const { authToken } = useAuth(); // Get the auth token from context
     const [profile, setProfile] = useState({
@@ -41,7 +43,7 @@ const PlayerProfile = () => {
             try {
                 const imageUrl = await getProfileImage(authToken); // Get image URL from backend
                 console.log("The image URL: ", imageUrl);
-                setProfileImage(`${process.env.REACT_APP_API_BASE_URL}${imageUrl}`); // Prepend backend host
+                setProfileImage(`${API_URL+imageUrl}`); // Prepend backend host
             } catch (error) {
                 console.error("Error fetching profile image:", error);
             }
@@ -73,7 +75,7 @@ const PlayerProfile = () => {
 
         try {
             const imageUrl = await uploadProfileImage(file, authToken); // Upload image to backend
-            setProfileImage(`${process.env.REACT_APP_API_BASE_URL}${imageUrl}?t=${Date.now()}`);// Set image URL to display
+            setProfileImage(`${API_URL+imageUrl}?t=${Date.now()}`);// Set image URL to display
         } catch (error) {
             console.error("Error uploading image:", error);
         }

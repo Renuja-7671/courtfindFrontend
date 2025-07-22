@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/ownerSidebar";
 import { Bar } from "react-chartjs-2";
 import 'chart.js/auto';
+import {REACT_APP_API_BASE_URL} from '../config';
+
 
 const OwnerProfile = () => {
+  const API_URL = REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { authToken } = useAuth();
 
@@ -28,7 +31,7 @@ const OwnerProfile = () => {
           getOwnerLoginTimes(authToken)
         ]);
         setProfile(profileData);
-        setProfileImage(`${process.env.REACT_APP_API_BASE_URL}${imageUrl}`);
+        setProfileImage(`${API_URL+imageUrl}`);
         setActivitySummary(summary);
         setLoginTimes(loginData.loginByHour);
       } catch (error) {
@@ -55,7 +58,7 @@ const OwnerProfile = () => {
     if (!file) return;
     try {
       const imageUrl = await uploadProfileImage(file, authToken);
-      setProfileImage(`${process.env.REACT_APP_API_BASE_URL}${imageUrl}`);
+      setProfileImage(`${API_URL+imageUrl}`);
     } catch (error) {
       console.error("Upload error:", error);
     }
