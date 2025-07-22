@@ -131,7 +131,7 @@ const SuperAdminArenaApprovals = () => {
               </Col>
               {selectedArena.image_url && (
                 <Col md={12} className="mt-3 text-center">
-                  <img src={`http://localhost:8000${selectedArena.image_url}`} alt="arena" style={{ width: "100%", height: 200, objectFit: "cover", borderRadius: "8px" }} />
+                  <img src={`${selectedArena.image_url}`} alt="arena" style={{ width: "100%", height: 200, objectFit: "cover", borderRadius: "8px" }} />
                 </Col>
               )}
             </Row>
