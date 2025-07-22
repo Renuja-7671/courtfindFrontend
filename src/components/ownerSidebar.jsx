@@ -29,7 +29,7 @@ const Sidebar = () => {
                     const data = await getOwnerProfile(authToken);
                     setProfile(data);
                     const imageUrl = await getProfileImage(authToken);
-                    setProfileImage(`${API_URL+imageUrl}`);
+                    setProfileImage(`${imageUrl}`);
                 } catch (error) {
                     console.error("Error fetching profile:", error);
                 }

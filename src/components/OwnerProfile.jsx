@@ -31,7 +31,7 @@ const OwnerProfile = () => {
           getOwnerLoginTimes(authToken)
         ]);
         setProfile(profileData);
-        setProfileImage(`${API_URL+imageUrl}`);
+        setProfileImage(`${imageUrl}`);
         setActivitySummary(summary);
         setLoginTimes(loginData.loginByHour);
       } catch (error) {
@@ -58,7 +58,7 @@ const OwnerProfile = () => {
     if (!file) return;
     try {
       const imageUrl = await uploadProfileImage(file, authToken);
-      setProfileImage(`${API_URL+imageUrl}`);
+      setProfileImage(`${imageUrl}`);
     } catch (error) {
       console.error("Upload error:", error);
     }
