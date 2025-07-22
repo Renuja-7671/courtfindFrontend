@@ -9,9 +9,7 @@ export const registerUser = async (userData) => {
     const response = await api.post("/auth/register", userData);
     return response.data;
   } catch (error) {
-    const errorMessage = error.response?.data || error.message || "An error occurred";
-    console.error("Register Error:", errorMessage); // Debugging line
-    throw errorMessage;
+    console.error("Register Error:", error); // Debugging line
   }
 };
 
