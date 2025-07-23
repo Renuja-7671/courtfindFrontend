@@ -1,10 +1,5 @@
-const STRIPE_PUBLISHABLE_KEY = "pk_test_51RirFIFwBYKnL5Z3swzBJJ1N9TUIe9fIJKvXcnw6NH1V3pSWagHy9fHBiuIbMAEsKj6rvxIyUyGBde8CCvy0arXB00ToVFYydf"
-const REACT_APP_API_BASE_URL= "https://courtfindbackend-production.up.railway.app"
-//const REACT_APP_API_BASE_URL= "http://localhost:8000"
-
-
-//const REACT_APP_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-//const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+// config.js
+const REACT_APP_API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_51RirFIFwBYKnL5Z3swzBJJ1N9TUIe9fIJKvXcnw6NH1V3pSWagHy9fHBiuIbMAEsKj6rvxIyUyGBde8CCvy0arXB00ToVFYydf";
 
 export { REACT_APP_API_BASE_URL, STRIPE_PUBLISHABLE_KEY };
-
