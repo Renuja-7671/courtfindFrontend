@@ -41,6 +41,7 @@ import ProfitCourtwise from "./views/MyProfitCourtwise";
 import ownerRequests from "./views/ownerRequests";
 import arenaPaymentPage from "./views/arenaPayments";
 import arenaPaymentSuccess from "./views/arenaPaymentSuccess";
+import PaymentArena from "./views/PaymentArena";
 
 
 
@@ -55,6 +56,7 @@ import AdminProfit from "./views/AdminProfit";
 import AdminReviews from "./views/AdminReviews";
 import AdminProfile from "./views/AdminProfile";
 import AdminRequests from "./views/AdminRequests";
+import PaymentArena from "./views/PaymentArena";
 
 
 // Helper component for wrapping routes with layout
@@ -85,10 +87,10 @@ const playerRoutes = [
   { path: "/player-dashboard", element: PlayerDashboard },
   { path: "/player-profile", element: PlayerProfile },
   { path: "/player-change-password", element: PlayerChangePassword },
-  { path: "/player-invoices",element: PlayerInvoice }, 
-  { path: "/feedback/:courtId", element: FeedbackPage},
+  { path: "/player-invoices", element: PlayerInvoice },
+  { path: "/feedback/:courtId", element: FeedbackPage },
   { path: "/payment/:bookingId/:total", element: PaymentPage },
-  { path: "/payment-success/:bookingId/:absoluteAmount", element: PaymentSuccess }, 
+  { path: "/payment-success/:bookingId/:absoluteAmount", element: PaymentSuccess },
   { path: "/payment-cancel", element: PaymentCancel },
 ];
 
@@ -100,10 +102,10 @@ const ownerRoutes = [
   { path: "/add-courts", element: AddCourts },
   { path: "/manage-arenas", element: ArenaManagement },
   { path: "/arena-bookings", element: OwnerArenaBookings },
-  { path: "/my-profit", element: MyProfitPage},
-  { path: "/courtwise-profit", element: ProfitCourtwise},
+  { path: "/my-profit", element: MyProfitPage },
+  { path: "/courtwise-profit", element: ProfitCourtwise },
   { path: "/owner-requests", element: ownerRequests },
-  { path: "/arena-payment/:arenaId/:price", element: arenaPaymentPage },
+  { path: "/arena-payment/:arenaId/:price", element: PaymentArena },
   { path: "/arenaPayment-success/:arenaId/:price", element: arenaPaymentSuccess },
 
 ];
