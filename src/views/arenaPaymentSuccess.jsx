@@ -22,8 +22,7 @@ const arenaPaymentSuccess = () => {
       try {
         const url = await generateArenaInvoice(arenaId, price);
         console.log("Invoice URL:", url);
-        const filename = url.split("/").pop(); // Get invoice_123.pdf
-        setInvoiceFilename(filename);
+        setInvoiceFilename(url);
       } catch (err) {
         console.error("Error generating invoice:", err);
       } finally {
@@ -48,22 +47,17 @@ const arenaPaymentSuccess = () => {
     hasRun.current = true;
   }, [arenaId, price, token]);
 
-  const handleDownload = async () => {
-    try {
-      setDownloading(true);
-      const blobUrl = await downloadInvoice(invoiceFilename);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = `CourtFind-Arena-Invoice-${arenaId}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (err) {
-      console.error("Error downloading invoice:", err);
-    } finally {
-      setDownloading(false);
-    }
-  };
+  const handleDownload = () => {
+  const link = document.createElement("a");
+  link.href = invoiceFilename; 
+  window.open(invoiceFilename, "_blank");
+  link.target = "_blank"; // optional: open in new tab
+  link.download = `CourtFind-Arena-Invoice-${arenaId}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 
   return (
     <Container className="py-5 text-center">

@@ -11,9 +11,11 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { FaCreditCard, FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover } from "react-icons/fa";
-import {REACT_APP_API_BASE_URL} from '../config';
+import {REACT_APP_API_BASE_URL, STRIPE_PUBLISHABLE_KEY} from '../config';
 
-const stripePromise = loadStripe("pk_test_51RirFIFwBYKnL5Z3swzBJJ1N9TUIe9fIJKvXcnw6NH1V3pSWagHy9fHBiuIbMAEsKj6rvxIyUyGBde8CCvy0arXB00ToVFYydf");
+const PUBLISHABE_KEY = STRIPE_PUBLISHABLE_KEY;
+
+const stripePromise = loadStripe(`${PUBLISHABE_KEY}`);
 
 const ELEMENT_OPTIONS = {
   style: {
