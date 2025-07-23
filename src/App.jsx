@@ -56,7 +56,6 @@ import AdminProfit from "./views/AdminProfit";
 import AdminReviews from "./views/AdminReviews";
 import AdminProfile from "./views/AdminProfile";
 import AdminRequests from "./views/AdminRequests";
-import PaymentArena from "./views/PaymentArena";
 
 
 // Helper component for wrapping routes with layout
