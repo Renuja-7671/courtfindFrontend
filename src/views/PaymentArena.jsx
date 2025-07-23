@@ -13,7 +13,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { FaCreditCard, FaCcVisa, FaCcMastercard, FaCcAmex, FaCcDiscover } from "react-icons/fa";
 import { REACT_APP_API_BASE_URL, STRIPE_PUBLISHABLE_KEY } from '../config';
 
-const PUBLISHABE_KEY = STRIPE_PUBLISHABLE_KEY;
+const PUBLISHABE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 
 const stripePromise = loadStripe(`${PUBLISHABE_KEY}`);
 

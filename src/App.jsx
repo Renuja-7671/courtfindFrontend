@@ -39,11 +39,8 @@ import OwnerArenaBookings from "./views/OwnerArenaBookings";
 import MyProfitPage from "./views/MyProfit";
 import ProfitCourtwise from "./views/MyProfitCourtwise";
 import ownerRequests from "./views/ownerRequests";
-import arenaPaymentPage from "./views/arenaPayments";
 import arenaPaymentSuccess from "./views/arenaPaymentSuccess";
 import PaymentArena from "./views/PaymentArena";
-
-
 
 // Admin Views
 import AdminDashboard from "./views/AdminDashboard";
@@ -56,7 +53,6 @@ import AdminProfit from "./views/AdminProfit";
 import AdminReviews from "./views/AdminReviews";
 import AdminProfile from "./views/AdminProfile";
 import AdminRequests from "./views/AdminRequests";
-
 
 // Helper component for wrapping routes with layout
 const withLayout = (Component) => (
@@ -80,6 +76,9 @@ const commonRoutes = [
   { path: "/home", element: Homepage },
   { path: "/reviews/:courtId", element: ViewReviews },
   { path: "/about", element: AboutUs },
+  // Payment routes moved here temporarily for testing
+  { path: "/arena-payment/:arenaId/:price", element: PaymentArena },
+  { path: "/arenaPayment-success/:arenaId/:price", element: arenaPaymentSuccess },
 ];
 
 const playerRoutes = [
@@ -104,9 +103,9 @@ const ownerRoutes = [
   { path: "/my-profit", element: MyProfitPage },
   { path: "/courtwise-profit", element: ProfitCourtwise },
   { path: "/owner-requests", element: ownerRequests },
-  { path: "/arena-payment/:arenaId/:price", element: PaymentArena },
-  { path: "/arenaPayment-success/:arenaId/:price", element: arenaPaymentSuccess },
-
+  // Payment routes moved to commonRoutes for testing
+  // { path: "/arena-payment/:arenaId/:price", element: PaymentArena },
+  // { path: "/arenaPayment-success/:arenaId/:price", element: arenaPaymentSuccess },
 ];
 
 const adminRoutes = [
