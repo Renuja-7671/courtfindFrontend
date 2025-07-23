@@ -43,11 +43,6 @@ export const getArenasForOwnerWithStatus = async (token) => {
     }
 };
 
-export const generateArenaInvoice = async (arenaId, price) => {
-  const res = await api.get(`/owner/generate-arena-invoice/${arenaId}`, {
-    params: { price },});
-  return res.data.invoiceUrl;
-};
 
 export const downloadInvoice = async (filename) => {
   const response = await api.get(`/player/download-invoice/${filename}`, {
@@ -55,6 +50,28 @@ export const downloadInvoice = async (filename) => {
   });
   const url = window.URL.createObjectURL(new Blob([response.data]));
   return url;
+};
+
+// Fix your generateArenaInvoice function in ownerService.js
+
+export const generateArenaInvoice = async (arenaId, price) => {
+  try {
+    console.log('Calling backend to generate invoice...');
+    const res = await api.get(`/owner/generate-arena-invoice/${arenaId}`, {
+      params: { price },
+    });
+    
+    console.log('Backend response:', res.data);
+    
+    if (!res.data.invoiceUrl) {
+      throw new Error('No invoice URL returned from server');
+    }
+    
+    return res.data.invoiceUrl;
+  } catch (error) {
+    console.error('Error generating invoice:', error);
+    throw error;
+  }
 };
 
 export const updatePaymentsTableForArenaAdd = async (arenaId, total, token) => {
