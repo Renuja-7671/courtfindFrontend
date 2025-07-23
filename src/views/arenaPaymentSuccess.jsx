@@ -11,12 +11,11 @@ const ArenaPaymentSuccess = () => {
   const [invoiceUrl, setInvoiceUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [paymentUpdated, setPaymentUpdated] = useState(false);
+  const [currentStep, setCurrentStep] = useState("Initializing...");
   const token = localStorage.getItem("authToken");
   const hasRun = useRef(false);
   const navigate = useNavigate();
 
-  // Update payment table first, then generate invoice
   useEffect(() => {
     if (hasRun.current) return;
     hasRun.current = true;
@@ -26,45 +25,71 @@ const ArenaPaymentSuccess = () => {
         setLoading(true);
         setError("");
 
-        console.log('Processing payment for:', { arenaId, price });
+        console.log('=== PROCESSING PAYMENT START ===');
+        console.log('Arena ID:', arenaId);
+        console.log('Price:', price);
+        console.log('Token exists:', !!token);
+
+        // Validate parameters
+        if (!arenaId || !price) {
+          throw new Error("Missing arena ID or price");
+        }
+
+        if (!token) {
+          throw new Error("Authentication token not found. Please login again.");
+        }
 
         // Step 1: Update payment status
+        setCurrentStep("Updating payment status...");
         console.log('Step 1: Updating payment status...');
+        
         const paymentResponse = await updatePaymentsTableForArenaAdd(arenaId, price, token);
-        console.log('Payment updated:', paymentResponse);
-        setPaymentUpdated(true);
+        console.log('Payment updated successfully:', paymentResponse);
 
         // Step 2: Generate invoice
+        setCurrentStep("Generating invoice...");
         console.log('Step 2: Generating invoice...');
+        
         const invoiceUrl = await generateArenaInvoice(arenaId, price);
-        console.log('Invoice generated:', invoiceUrl);
+        console.log('Invoice generated successfully:', invoiceUrl);
+        
         setInvoiceUrl(invoiceUrl);
+        setCurrentStep("Complete!");
+        console.log('=== PROCESSING PAYMENT SUCCESS ===');
 
       } catch (err) {
-        console.error("Error processing payment:", err);
+        console.error('=== PROCESSING PAYMENT ERROR ===');
+        console.error('Error details:', err);
         setError(err.message || "Failed to process payment");
+        setCurrentStep("Error occurred");
       } finally {
         setLoading(false);
       }
     };
 
-    if (arenaId && price && token) {
-      processPayment();
-    } else {
-      setError("Missing required parameters or authentication");
-      setLoading(false);
-    }
+    processPayment();
   }, [arenaId, price, token]);
 
   const handleDownload = () => {
     if (invoiceUrl) {
-      // Open invoice in new tab
+      console.log('Opening invoice URL:', invoiceUrl);
       window.open(invoiceUrl, "_blank");
+    } else {
+      console.error('No invoice URL available');
     }
   };
 
   const handleGoToDashboard = () => {
     navigate("/owner-dashboard");
+  };
+
+  const handleRetry = () => {
+    hasRun.current = false;
+    setLoading(true);
+    setError("");
+    setInvoiceUrl("");
+    setCurrentStep("Retrying...");
+    window.location.reload();
   };
 
   if (loading) {
@@ -76,9 +101,10 @@ const ArenaPaymentSuccess = () => {
               <Card.Body>
                 <Spinner animation="border" variant="primary" className="mb-3" />
                 <h4>Processing Payment...</h4>
-                <p className="text-muted">
-                  {!paymentUpdated ? "Updating payment status..." : "Generating invoice..."}
-                </p>
+                <p className="text-muted">{currentStep}</p>
+                <small className="text-muted">
+                  Arena ID: {arenaId} | Amount: LKR {price}
+                </small>
               </Card.Body>
             </Card>
           </Col>
@@ -91,16 +117,27 @@ const ArenaPaymentSuccess = () => {
     return (
       <Container className="py-5 text-center">
         <Row className="justify-content-center">
-          <Col md={6}>
+          <Col md={8}>
             <Card className="shadow p-4">
               <Card.Body>
                 <Alert variant="danger">
-                  <h5>Error Processing Payment</h5>
-                  <p>{error}</p>
+                  <Alert.Heading>Error Processing Payment</Alert.Heading>
+                  <p className="mb-3">{error}</p>
+                  <hr />
+                  <div className="d-flex gap-2 justify-content-center">
+                    <Button variant="outline-primary" onClick={handleRetry}>
+                      🔄 Retry
+                    </Button>
+                    <Button variant="primary" onClick={handleGoToDashboard}>
+                      Go to Dashboard
+                    </Button>
+                  </div>
                 </Alert>
-                <Button variant="primary" onClick={handleGoToDashboard}>
-                  Go to Dashboard
-                </Button>
+                <div className="mt-3">
+                  <small className="text-muted">
+                    Arena ID: {arenaId} | Amount: LKR {price}
+                  </small>
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -138,35 +175,71 @@ const ArenaPaymentSuccess = () => {
                 </p>
               </div>
 
-              <div className="mb-4">
-                <strong>Arena ID:</strong> {arenaId}<br />
-                <strong>Amount Paid:</strong> LKR {price}
+              <div className="mb-4 p-3 bg-light rounded">
+                <div className="row">
+                  <div className="col-6 text-start">
+                    <strong>Arena ID:</strong><br />
+                    <span className="text-primary">{arenaId}</span>
+                  </div>
+                  <div className="col-6 text-end">
+                    <strong>Amount Paid:</strong><br />
+                    <span className="text-success">LKR {price}</span>
+                  </div>
+                </div>
               </div>
 
               {invoiceUrl ? (
-                <div className="mb-3">
+                <div className="mb-4">
+                  <Alert variant="success" className="d-flex align-items-center">
+                    <div className="flex-grow-1">
+                      <strong>📄 Invoice Generated Successfully!</strong>
+                      <div className="small text-muted mt-1">
+                        Your invoice has been saved to Google Drive
+                      </div>
+                    </div>
+                  </Alert>
                   <Button
                     variant="outline-primary"
                     onClick={handleDownload}
                     className="me-2"
+                    size="lg"
                   >
                     📄 View Invoice
                   </Button>
                 </div>
               ) : (
-                <Alert variant="warning" className="mb-3">
-                  Invoice is being generated. Please check your dashboard later.
+                <Alert variant="warning" className="mb-4">
+                  <strong>⚠️ Invoice Generation in Progress</strong>
+                  <div className="small mt-1">
+                    Your invoice is being generated. You can check your dashboard later or contact support if needed.
+                  </div>
                 </Alert>
               )}
 
-              <div className="mt-3">
+              <div className="d-flex gap-2 justify-content-center">
                 <Button 
                   variant="success" 
                   onClick={handleGoToDashboard}
+                  size="lg"
                   className="px-4"
                 >
-                  Go to Dashboard
+                  🏠 Go to Dashboard
                 </Button>
+                {!invoiceUrl && (
+                  <Button 
+                    variant="outline-secondary" 
+                    onClick={handleRetry}
+                    size="lg"
+                  >
+                    🔄 Retry Invoice
+                  </Button>
+                )}
+              </div>
+
+              <div className="mt-4 pt-3 border-top">
+                <small className="text-muted">
+                  Need help? Contact our support team at support@courtfind.com
+                </small>
               </div>
             </Card.Body>
           </Card>
