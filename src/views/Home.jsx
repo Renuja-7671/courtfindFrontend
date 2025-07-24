@@ -270,7 +270,7 @@ const Homepage = () => {
                                         style={{ cursor: 'pointer', overflow: 'hidden' }}
                                     >
                                         <img 
-                                            src={arena.image_url ? `${API_URL+arena.image_url}` : "https://via.placeholder.com/300x200?text=Arena+Image"}
+                                            src={arena.image_url ? `${arena.image_url}` : "https://via.placeholder.com/300x200?text=Arena+Image"}
                                             className="card-img-top"
                                             alt={arena.name}
                                             style={{ height: '200px', objectFit: 'cover' }}
