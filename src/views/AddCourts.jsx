@@ -20,6 +20,7 @@ const AddCourts = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const arenaId = location.state?.arenaId;
+  const fromNewArena = location.state?.fromNewArena || false;
   const { authToken } = useAuth();
 
   const [sports, setSports] = useState([]);

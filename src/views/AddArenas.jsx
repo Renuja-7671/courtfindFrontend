@@ -51,7 +51,7 @@ const AddArena = () => {
                 setImageFile(null);
                 setImagePreview(null);
                 setTimeout(() => {
-                    navigate("/add-courts", { state: { arenaId: response.data.arenaId } });
+                    navigate("/add-courts", { state: { arenaId: response.data.arenaId, fromNewArena: true, } });
                 }, 100);
             } else {
                 setError("Failed to add arena. Please try again.");

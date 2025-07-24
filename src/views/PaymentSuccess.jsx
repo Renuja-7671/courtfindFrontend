@@ -17,9 +17,7 @@ const PaymentSuccess = () => {
     const fetchInvoice = async () => {
       try {
         const url = await generateInvoice(bookingId);
-        // Assuming your backend returns something like "/uploads/invoices/invoice_61.pdf"
-        const filename = url.split("/").pop(); // Extract just "invoice_61.pdf"
-        setInvoiceFilename(filename);
+        setInvoiceFilename(url);
       } catch (err) {
         console.error("Error generating invoice:", err);
       } finally {
@@ -50,24 +48,16 @@ const PaymentSuccess = () => {
     hasRun.current = true; // Set flag to true after running
   }, [bookingId, absoluteAmount]);
 
-  const handleDownload = async () => {
-    try {
-      setDownloading(true);
-      const blobUrl = await downloadInvoice(invoiceFilename);
-
-      // Create a temporary anchor tag and trigger download
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = `CourtFind-Invoice-${bookingId}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (err) {
-      console.error("Error downloading invoice:", err);
-    } finally {
-      setDownloading(false);
-    }
-  };
+  const handleDownload = () => {
+  const link = document.createElement("a");
+  link.href = invoiceFilename; 
+  window.open(invoiceFilename, "_blank");
+  link.target = "_blank"; // optional: open in new tab
+  link.download = `CourtFind-Booking-Invoice-${bookingId}.pdf`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <Container className="py-5 text-center">
