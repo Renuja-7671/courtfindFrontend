@@ -81,11 +81,11 @@ const AdminProfit = () => {
   const barChartOptions = {
     scales: {
       y: { beginAtZero: true, title: { display: true, text: 'Amount (LKR)' }, ticks: { font: { size: 10 } } },
-      x: { title: { display: true, text: 'Pricing Activities' }, ticks: { font: { size: 10 }, maxRotation: 45 } }
+      x: { title: { display: true, text: 'Arenas' }, ticks: { font: { size: 10 }, maxRotation: 45 } }
     },
     plugins: {
       legend: { display: false },
-      title: { display: true, text: 'Revenue by Activity', font: { size: 14 } }
+      title: { display: true, text: 'Revenue by Arenas', font: { size: 14 } }
     },
     maintainAspectRatio: false,
   };

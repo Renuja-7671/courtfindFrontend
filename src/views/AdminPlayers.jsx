@@ -236,10 +236,10 @@ const AdminPlayers = () => {
               ) : selectedPlayer ? (
                 <div className="modal-body">
                   <div className="player-details">
-                    <div className="detail-row">
+                    {/* <div className="detail-row">
                       <span className="detail-label">Password:</span>
                       <span className="detail-value">••••••••••</span>
-                    </div>
+                    </div> */}
                     <div className="detail-row">
                       <span className="detail-label">Mobile number:</span>
                       <span className="detail-value">{selectedPlayer.mobile || 'Not provided'}</span>

@@ -1,4 +1,3 @@
-
 .admin-dashboard-container {
   padding: 2rem;
   color: white;
@@ -158,4 +157,23 @@
   .view-all-button {
     width: 100%;
   }
+}
+
+
+.chart-container {
+  display: flex; /* NEW: Use flexbox for side-by-side layout */
+  gap: 20px; /* NEW: Space between pie and bar charts */
+  margin-bottom: 20px;
+}
+
+.pie-chart {
+  flex: 1; /* NEW: Take available space */
+  max-width: 40%; /* NEW: Limit pie chart width */
+  height: 300px; /* NEW: Fixed height for consistency */
+}
+
+.bar-chart {
+  flex: 1.5; /* NEW: Give bar chart more space (1.5x pie chart) */
+  max-width: 60%; /* NEW: Reduce bar chart width */
+  height: 300px; /* NEW: Fixed height for consistency */
 }
