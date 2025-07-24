@@ -267,7 +267,7 @@ const MyProfitPage = () => {
                       </Button>
                     </div>
 
-                    <Tabs defaultActiveKey="monthly" className="mb-3">
+                    <Tabs defaultActiveKey="yearly" className="mb-3">
                       <Tab eventKey="yearly" title="Monthly">
                         <div style={{ height: '400px' }}>
                           <Line

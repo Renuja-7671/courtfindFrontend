@@ -204,7 +204,7 @@ const ProfitCourtwise = () => {
         <div className="container-fluid p-5 bg-white">
           {/* Header */}
           <div className="mb-4">
-            <h1 className="display-5 fw-bold text-dark mb-4 text-center">Profit of your Arena</h1>
+            <h1 className="display-5 fw-bold text-dark mb-4 text-center">Profit of your Arena 2025</h1>
             
             {/* Arena Selector */}
             <div className="mb-4">

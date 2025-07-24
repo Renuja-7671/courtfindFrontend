@@ -124,12 +124,12 @@ const AddCourts = () => {
       
     // Modified navigation logic
     setTimeout(() => {
-      if (arenaId && location.state?.arenaId) {
+      if (fromNewArena) {
         // Came from Arena Management - return to manage arenas
         navigate("/owner-requests");
       } else {
         // Came from Add Arena flow - go to owner dashboard
-        navigate("/owner-dashboard");
+        navigate("/manage-arenas");
       }
     }, 500);
      } catch (error) {
