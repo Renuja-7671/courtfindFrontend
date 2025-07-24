@@ -65,7 +65,7 @@ const PlayerDashboard = () => {
                                 <Row className="g-0">
                                     <Col md={3}>
                                         <Card.Img 
-                                            src={`${API_URL+booking.image_url}`} 
+                                            src={`${booking.image_url}`} 
                                             alt="Arena"
                                             style={{ height: '100%', objectFit: 'cover' }}
                                         />
