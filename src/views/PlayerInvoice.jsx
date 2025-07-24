@@ -11,6 +11,7 @@ const PlayerInvoices = () => {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(true); // To show loading spinner
     const [error, setError] = useState(''); // To store any error messages
+    const [showAll, setShowAll] = useState(false); // 👈 Toggle for see more/less
 
     // Fetch player invoices when component mounts
     useEffect(() => {
@@ -48,6 +49,8 @@ const PlayerInvoices = () => {
         }
     };
 
+    // Show first 3 or all depending on toggle
+    const visibleInvoices = showAll ? invoices : invoices.slice(0, 3);
 
     return (
         <Container className="min-vh-100 d-flex flex-column align-items-center">
@@ -76,7 +79,7 @@ const PlayerInvoices = () => {
                         // Invoices list
                     ) : (
                         <Row>
-                            {invoices.map((invoice, index) => (
+                            {visibleInvoices.map((invoice, index) => (
                                 <Col md={12} className="mb-3" key={index}>
                                     <Card className="shadow-sm">
                                         <Row className="g-0">
@@ -123,6 +126,16 @@ const PlayerInvoices = () => {
                                 </Col>
                             ))}
                         </Row>
+                        )}
+                           {invoices.length > 3 && ( 
+                           <div className="text-center mt-3"> 
+                        <button 
+                     className="btn btn-outline-primary" 
+                  onClick={() => setShowAll(!showAll)}
+                > 
+               {showAll ? 'See Less' : 'See More'} 
+        </button> 
+    </div>
                     )}
                 </Col>
             </Row>

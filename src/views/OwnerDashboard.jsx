@@ -100,20 +100,78 @@ const OwnerDashboard = () => {
   }, [token]);
 
   const handleReport01Download = async (token) => {
-    try {
-      const data = await downloadArenaRevenueReport(token);
+  try {
+    console.log('Starting report download...');
+    
+    // Optional: Show loading indicator
+    // setIsDownloading(true);
+    
+    const data = await downloadArenaRevenueReport(token);
 
-      const url = window.URL.createObjectURL(new Blob([data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `Arena_Revenue_Report_${Date.now()}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-    } catch (error) {
-      console.error('Failed to download report:', error);
-      alert('Error downloading report');
+    // Validate received data
+    if (!data || data.size === 0) {
+      throw new Error('No data received from server');
     }
+
+    console.log('Report data received, size:', data.size);
+    
+    // Create and trigger download
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    
+    link.href = url;
+    link.download = `Arena_Revenue_Report_${new Date().getFullYear()}_${Date.now()}.pdf`;
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Cleanup
+    window.URL.revokeObjectURL(url);
+    
+    console.log('Report downloaded successfully');
+    
+    // Optional: Show success message
+    // toast.success('Arena revenue report downloaded successfully!');
+    
+  } catch (error) {
+    console.error('Failed to download report:', error);
+    
+    // Handle different types of errors
+    let errorMessage = 'Failed to download report. Please try again.';
+    
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          errorMessage = 'Please log in again to download the report.';
+          break;
+        case 403:
+          errorMessage = 'You do not have permission to access this report.';
+          break;
+        case 404:
+          errorMessage = 'Report service not found. Please contact support.';
+          break;
+        case 500:
+          errorMessage = 'Server error generating report. Please try again later.';
+          break;
+        default:
+          errorMessage = `Error: ${error.response.status}. Please try again.`;
+      }
+    } else if (error.code === 'NETWORK_ERROR') {
+      errorMessage = 'Network error. Please check your connection and try again.';
+    }
+    
+    alert(errorMessage);
+    // Or use your notification system:
+    // toast.error(errorMessage);
+    
+  } finally {
+    // Hide loading indicator
+    // setIsDownloading(false);
   }
+};
 
   return (
     <Container className="min-vh-100 d-flex flex-column  align-items-center">

@@ -123,7 +123,7 @@ export const getAverageRatingByCourt = async (courtId,token) => {
 // Get individual reviews for a court
 export const getReviewsByCourt = async (courtId, token) => {
   try {
-    const response = await api.get(`/player/reviews/${courtId}`, {
+    const response = await api.get(`/player/reviewsNoAuth/${courtId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Reviews fetched:", response.data);
@@ -152,4 +152,19 @@ export const getAverageRatingByCourtWithoutAuth = async (courtId) => {
     console.error('Error fetching average rating without auth:', error);
     throw error;
   }
-}
+};
+
+//notifications 
+export const getPlayerNotifications = async (token) => {
+    try {
+        const response = await api.get('/player/notifications', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.notifications; // assuming the backend returns { notifications: [...] }
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+        throw error;
+    }
+};

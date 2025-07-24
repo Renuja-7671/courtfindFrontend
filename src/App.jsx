@@ -27,6 +27,7 @@ import FeedbackPage from "./views/Feedback";
 import PaymentPage from "./views/paymentPage";
 import PaymentSuccess from "./views/PaymentSuccess";
 import PaymentCancel from "./views/paymentCancel";
+import PlayerNotifications from "./views/PlayerNotifications";
 
 // Owner Views
 import OwnerDashboard from "./views/OwnerDashboard";
@@ -90,6 +91,7 @@ const playerRoutes = [
   { path: "/payment/:bookingId/:total", element: PaymentPage },
   { path: "/payment-success/:bookingId/:absoluteAmount", element: PaymentSuccess },
   { path: "/payment-cancel", element: PaymentCancel },
+  { path: "/player-notifications", element: PlayerNotifications },
 ];
 
 const ownerRoutes = [

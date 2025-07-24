@@ -9,6 +9,7 @@ const PlayerDashboard = () => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [showAll, setShowAll] = useState(false); // 👈 Toggle for see more/less
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -25,6 +26,8 @@ const PlayerDashboard = () => {
 
         fetchBookings();
     }, []);
+
+    const visibleBookings = showAll ? bookings : bookings.slice(0, 3);
 
     const getStatusVariant = (status) => {
         switch (status.toLowerCase()) {
@@ -59,7 +62,7 @@ const PlayerDashboard = () => {
                 <Alert variant="info">No bookings found.</Alert>
             ) : (
                 <Row>
-                    {bookings.map((booking, index) => (
+                    {visibleBookings.map((booking, index) => (
                         <Col md={12} className="mb-3" key={index}>
                             <Card className="shadow-sm">
                                 <Row className="g-0">
@@ -98,6 +101,16 @@ const PlayerDashboard = () => {
                         </Col>
                     ))}
                 </Row>
+                )}
+            {bookings.length > 3 && ( 
+            <div className="text-center mt-3"> 
+                <button 
+                    className="btn btn-outline-primary" 
+                    onClick={() => setShowAll(!showAll)}
+                > 
+                    {showAll ? 'See Less' : 'See More'} 
+                </button> 
+            </div>
             )}
             </Col>
             </Row>

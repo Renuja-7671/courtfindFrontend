@@ -27,7 +27,7 @@ const PlayerChangePassword = () => {
             return;
         }
 
-        // ✅ Declare password rules FIRST
+        // Declare password rules FIRST
     const hasUpper = /[A-Z]/.test(newPassword);
     const hasLower = /[a-z]/.test(newPassword);
     const hasNumber = /[0-9]/.test(newPassword);
@@ -83,7 +83,7 @@ const PlayerChangePassword = () => {
                         <h2 className="mb-4">Change Password</h2>
                         {message && <Alert variant={variant}>{message}</Alert>}
                         <Form onSubmit={handleChangePassword}>
-
+                            <div style={{ backgroundColor: "#e7f3ff", padding: "10px", borderRadius: "5px" }}>
                             <Form.Group className="mb-3" controlId="currentPassword">
                                 <Form.Label>Current Password</Form.Label>
                                 <InputGroup>
@@ -102,8 +102,8 @@ const PlayerChangePassword = () => {
                                 </Button>
                                 </InputGroup>
                             </Form.Group>
-
-
+                            </div>
+                            <div style={{ backgroundColor: "#e7f3ff", padding: "10px", borderRadius: "5px" }}>
                             <Form.Group className="mb-3" controlId="newPassword">
                                 <Form.Label>New Password</Form.Label>
                                 <InputGroup>
@@ -138,8 +138,8 @@ const PlayerChangePassword = () => {
                                     Use at least 8 characters, including uppercase, lowercase, numbers, and symbols.
                                 </Form.Text>
                             </Form.Group>
-
-
+                            </div>
+                             <div style={{ backgroundColor: "#e7f3ff", padding: "10px", borderRadius: "5px" }}>
                             <Form.Group className="mb-3" controlId="confirmPassword">
                                 <Form.Label>Confirm Password</Form.Label>
                                 <InputGroup>
@@ -158,6 +158,7 @@ const PlayerChangePassword = () => {
                                 </Button>
                                 </InputGroup>
                             </Form.Group>
+                            </div>
                             <br />
 
                             <Button variant="primary" type="submit">

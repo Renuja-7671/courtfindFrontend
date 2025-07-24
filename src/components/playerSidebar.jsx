@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import { FaTachometerAlt, FaUser, FaCalendarAlt, FaPlusCircle, FaChartLine, FaCog } from "react-icons/fa";
+import { FaTachometerAlt, FaUserCircle, FaCalendarAlt, FaBell, FaFileInvoice, FaKey, FaPlusCircle, FaChartLine, FaCog } from "react-icons/fa";
 import { getPlayerProfile, getProfileImage } from "../services/playerAuthService";
 import { useAuth } from "../contexts/AuthContext";
 import {REACT_APP_API_BASE_URL} from '../config';
@@ -39,10 +39,10 @@ const Sidebar = () => {
 
     const menuItems = [
         { path: "/player-dashboard", label: "Dashboard", icon: <FaTachometerAlt /> },// navigate to the dashboard page
-        { path: "/player-invoices", label: "My Invoices", icon: <FaUser /> },// not changed the path yet 
-        { path: "/player-profile", label: "My Profile", icon: <FaPlusCircle /> },//navigate to the profile page
-        { path: "/player-change-password", label: "Change Password", icon: <FaChartLine /> },// navigate to the change password page
-        
+        { path: "/player-invoices", label: "My Invoices", icon: <FaFileInvoice /> },// not changed the path yet 
+        { path: "/player-profile", label: "My Profile", icon: <FaUserCircle /> },//navigate to the profile page
+        { path: "/player-change-password", label: "Change Password", icon: <FaKey /> },// navigate to the change password page
+        { path: "/player-notifications", label: "Notifications", icon: <FaBell /> },
     ];
 
     return (
@@ -71,8 +71,8 @@ const Sidebar = () => {
             {`
             .sidebar { 
                 background-color: rgba(206, 221, 251, 1); /* Light blue */
-                padding: 15px;
-                height: 60vh;
+                padding: 20px;
+                height: 75vh;
                 width: 250px;
                 display: flex-start;
                 flex-direction: column;

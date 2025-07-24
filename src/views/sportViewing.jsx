@@ -123,7 +123,7 @@ const ViewingPage = () => {
       try {
         const statsData = await gerReviewStatsWithoutAuth(courtId);
         console.log("Review stats fetched:", statsData);
-        setReviewStats(statsData);
+        setReviewStats(statsData || {});
         const avgData = await getAverageRatingByCourtWithoutAuth(courtId);
         console.log("Average rating fetched:", avgData);
         setAverageRating(avgData.averageRating || 0.0);
@@ -305,9 +305,12 @@ const handleViewReviews = () => {
                 <p>Total Reviews: {reviewStats.total_reviews || 0}</p>
                 <Button
                   variant="link"
+                  style={{
+                      cursor:  'pointer' ,
+                      color:  '#007bff'
+                    }}
                   className="text-decoration-none"
                   onClick={handleViewReviews}
-                  //style={{ cursor: isLoggedInPlayer() ? 'pointer' : 'not-allowed', color: isLoggedInPlayer() ? '#007bff' : '#6c757d' }}
                 >
                   <FaStar /> {'Add or View Reviews'}
                 </Button>
