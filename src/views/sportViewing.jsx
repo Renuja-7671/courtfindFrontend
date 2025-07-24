@@ -111,6 +111,13 @@ const ViewingPage = () => {
     fetchCourt();
   }, [courtId,authToken]);
 
+  const fixCloudinaryUrl = (url) => {
+  if (typeof url === 'string' && url.startsWith('https:/') && !url.startsWith('https://')) {
+    return url.replace('https:/', 'https://');
+  }
+  return url;
+};
+
   useEffect(() => {
     const fetchReviewData = async () => {
       try {
@@ -253,16 +260,31 @@ const handleViewReviews = () => {
           <Card className="modern-card">
             {court.images?.length > 0 ? (
               <Carousel indicators={false}>
-                {court.images.map((img, idx) => (
-                  <Carousel.Item key={idx}>
-                    <img
-                      className="d-block w-100"
-                      src={`${img}`}
-                      alt={`Court image ${idx + 1}`}
-                      style={{ height: '400px', objectFit: 'cover', borderRadius: '15px' }}
-                    />
+                {court.images && court.images.length > 0 ? (
+                  court.images.map((img, idx) => (
+                    <Carousel.Item key={idx}>
+                      <img
+                        className="d-block w-100"
+                        src={fixCloudinaryUrl(img)}
+                        alt={`Court image ${idx + 1}`}
+                        style={{ height: '400px', objectFit: 'cover', borderRadius: '15px' }}
+                        onError={(e) => {
+                          console.error('Image failed to load:', img);
+                          e.target.style.display = 'none'; // Hide broken images
+                        }}
+                      />
+                    </Carousel.Item>
+                  ))
+                ) : (
+                  <Carousel.Item>
+                    <div 
+                      className="d-flex align-items-center justify-content-center"
+                      style={{ height: '400px', backgroundColor: '#f8f9fa', borderRadius: '15px' }}
+                    >
+                      <p className="text-muted">No images available</p>
+                    </div>
                   </Carousel.Item>
-                ))}
+                )}
               </Carousel>
             ) : (
               <Card.Img variant="top" src="/default-court.jpg" />
