@@ -9,7 +9,7 @@ const PlayerDashboard = () => {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [showAll, setShowAll] = useState(false); // 👈 Toggle for see more/less
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         const fetchBookings = async () => {

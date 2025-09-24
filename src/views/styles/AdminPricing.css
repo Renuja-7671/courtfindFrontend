@@ -38,37 +38,40 @@
   flex: 3;
 }
 
-.price-column {
-  flex: 1;
-  justify-content: center;
-}
 
-.actions-column {
-  flex: 2;
-  justify-content: flex-end;
+/* Unified button styles for Save/Cancel in edit mode */
+.edit-actions {
+  display: flex;
   gap: 10px;
+  align-items: center;
 }
-
-.update-btn {
-  background-color: #1a73e8;
+.edit-actions .save-btn {
+  background-color: #28a745;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 8px 20px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
-  min-height: 50px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
+  transition: background 0.2s;
 }
-
-.price-input {
-  width: 100px;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #495057;
-  background-color: #1e293b;
+.edit-actions .save-btn:hover {
+  background-color: #218838;
+}
+.edit-actions .cancel-btn {
+  background-color: #6c757d;
   color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.edit-actions .cancel-btn:hover {
+  background-color: #5a6268;
 }
 
 .add-activity-btn {

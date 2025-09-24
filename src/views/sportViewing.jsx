@@ -141,20 +141,25 @@ const ViewingPage = () => {
     navigate('/login', { replace: true, state: { from: location.pathname } });
     return;
   }
+
     if (!selectedDate || !selectedTime || !duration) return;
 
-    const date = selectedDate.toLocaleDateString();
-    const dateParts = convertToYMD(date);
+    // Build full ISO date-time strings for start and end
+    const y = selectedDate.getFullYear();
+    const m = String(selectedDate.getMonth() + 1).padStart(2, '0');
+    const d = String(selectedDate.getDate()).padStart(2, '0');
+    const dateStr = `${y}-${m}-${d}`;
 
     const startHour = parseInt(selectedTime.split(':')[0]);
+    const startTimeISO = `${dateStr}T${String(startHour).padStart(2, '0')}:00:00`;
     const endHour = startHour + parseInt(duration);
-    const endTime = `${endHour}:00`;
+    const endTimeISO = `${dateStr}T${String(endHour).padStart(2, '0')}:00:00`;
 
     const bookingData = {
       courtId: court.courtId,
-      booking_date: dateParts,
-      start_time: selectedTime,
-      end_time: endTime,
+      booking_date: dateStr,
+      start_time: startTimeISO,
+      end_time: endTimeISO,
       total_price: court.hourly_rate * parseInt(duration),
       payment_status: 'Pending',
       status: 'Booked',

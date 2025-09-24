@@ -233,12 +233,6 @@ const Homepage = () => {
                     </div>
                 </section>
 
-                {/* Error Display */}
-                {error && (
-                    <div className="alert alert-danger mb-4" role="alert">
-                        {error}
-                    </div>
-                )}
 
                 {/* Featured Venues */}
                 <section className="mb-5">
