@@ -54,23 +54,24 @@ const ViewingPage = () => {
 
   //To fetch the booked times in a selected date
   useEffect(() => {
-  const fetchBookedTimes = async () => {
-    if (!selectedDate || !courtId) return;
-    const formattedDate = selectedDate.toLocaleDateString(); 
-    console.log("The first conversion is: ",formattedDate);
-    // Convert date to YYYY-MM-DD format
-    const dateParts = convertToYMD(formattedDate);
-    console.log("The second conversion is: ",dateParts);
-    const response = await getBookingTimesByCourtId(courtId, dateParts);
-    if (Array.isArray(response)) {
-      setBookedSlots(response);
-    } else {
-      setBookedSlots([]);
-    }
-  };
-
-  fetchBookedTimes();
-}, [selectedDate, courtId]);
+    const fetchBookedTimes = async () => {
+      if (!selectedDate || !courtId) return;
+      // Format date as YYYY-MM-DD for backend
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      console.log("Fetching booked times for date:", formattedDate);
+      const response = await getBookingTimesByCourtId(courtId, formattedDate);
+      console.log("Booked times response:", response);
+      if (Array.isArray(response)) {
+        setBookedSlots(response);
+      } else {
+        setBookedSlots([]);
+      }
+    };
+    fetchBookedTimes();
+  }, [selectedDate, courtId]);
   
 
   useEffect(() => {
@@ -137,36 +138,33 @@ const ViewingPage = () => {
   // Handle booking submission
   const handleBooking = async () => {
     if (!isLoggedInPlayer()) {
-    alert("You must be logged in as a player to book a court.");
-    navigate('/login', { replace: true, state: { from: location.pathname } });
-    return;
-  }
-
+      alert("You must be logged in as a player to book a court.");
+      navigate('/login', { replace: true, state: { from: location.pathname } });
+      return;
+    }
     if (!selectedDate || !selectedTime || !duration) return;
-
-    // Build full ISO date-time strings for start and end
+    // Build date string (YYYY-MM-DD)
     const y = selectedDate.getFullYear();
     const m = String(selectedDate.getMonth() + 1).padStart(2, '0');
     const d = String(selectedDate.getDate()).padStart(2, '0');
     const dateStr = `${y}-${m}-${d}`;
-
-    const startHour = parseInt(selectedTime.split(':')[0]);
-    const startTimeISO = `${dateStr}T${String(startHour).padStart(2, '0')}:00:00`;
-    const endHour = startHour + parseInt(duration);
-    const endTimeISO = `${dateStr}T${String(endHour).padStart(2, '0')}:00:00`;
-
+    // Build time strings as 'HH:mm:ss'
+    const startParts = selectedTime.split(':');
+    const start_time = `${startParts[0].padStart(2, '0')}:${(startParts[1]||'00').padStart(2, '0')}:${(startParts[2]||'00').padStart(2, '0')}`;
+    const endHour = parseInt(startParts[0]) + parseInt(duration);
+    const end_time = `${endHour.toString().padStart(2, '0')}:${(startParts[1]||'00').padStart(2, '0')}:${(startParts[2]||'00').padStart(2, '0')}`;
     const bookingData = {
       courtId: court.courtId,
       booking_date: dateStr,
-      start_time: startTimeISO,
-      end_time: endTimeISO,
+      start_time,
+      end_time,
       total_price: court.hourly_rate * parseInt(duration),
       payment_status: 'Pending',
       status: 'Booked',
       owner_id: court.owner_id,
       arenaId: court.arenaId,
     };
-
+    console.log("Booking data prepared:", bookingData);
     try {
       const bookingId = await createBooking(bookingData, authToken);
       console.log("Booking ID sent for payment:", bookingId); // Debug log
@@ -177,7 +175,6 @@ const ViewingPage = () => {
         setSelectedDate('');
         setSelectedTime('');
         setDuration('');
-
       } else {
         alert("Booking failed: " + res.error);
       }
@@ -193,9 +190,12 @@ const ViewingPage = () => {
 
 // Generate time slots based on opening and closing hours
   const generateTimeSlots = (open, close) => {
+  // open/close are strings like '07:00:00'
+  const openHour = parseInt(open.split(':')[0]);
+  const closeHour = parseInt(close.split(':')[0]);
   const slots = [];
-  for (let hour = open; hour < close; hour++) {
-    slots.push(`${hour}:00`);
+  for (let hour = openHour; hour < closeHour; hour++) {
+    slots.push(`${hour.toString().padStart(2, '0')}:00:00`);
   }
   return slots;
 };
@@ -382,37 +382,26 @@ const handleViewReviews = () => {
         <div className="timeline-bar mt-3">
           {(() => {
             if (!selectedDate) return <p>Select a date to view availability.</p>;
-
             const dayName = new Date(selectedDate).toLocaleString('en-US', { weekday: 'long' });
             const dayAvail = availability[dayName];
             if (!dayAvail || !dayAvail.open || !dayAvail.close) return <p>This day is closed.</p>;
-
-            const openHour = parseInt(dayAvail.open.split(':')[0]);
-            const closeHour = parseInt(dayAvail.close.split(':')[0]);
-
-            // Create an array of all booked hours
-            const bookedHours = new Set();
-            bookedSlots.forEach(slot => {
-              const startHour = parseInt(slot.start_time.split(':')[0]);
-              const endHour = parseInt(slot.end_time.split(':')[0]);
-              for (let h = startHour; h < endHour; h++) {
-                bookedHours.add(h);
-              }
-            });
-
-            const slots = [];
-            for (let hour = openHour; hour < closeHour; hour++) {
-              const isBooked = bookedHours.has(hour);
-              slots.push(
+            // Generate slot times
+            const slotTimes = generateTimeSlots(dayAvail.open, dayAvail.close);
+            console.log("Generated slot times:", slotTimes);
+            console.log("Booked slots for the day:", bookedSlots);
+            if (slotTimes.length === 0) return <p>No available slots for this day.</p>;
+            // For each slot, check if it is booked
+            const slots = slotTimes.map(slotTime => {
+              const isBooked = bookedSlots.some(bs => slotTime >= bs.start_time && slotTime < bs.end_time);
+              return (
                 <div
-                  key={hour}
+                  key={slotTime}
                   className={`timeline-slot ${isBooked ? 'booked' : 'available'}`}
                 >
-                  {hour}:00
+                  {slotTime}
                 </div>
               );
-            }
-
+            });
             return slots;
           })()}
         </div>
@@ -460,7 +449,7 @@ const handleViewReviews = () => {
                   const openHour = parseInt(dayAvail.open.split(':')[0]);
                   const closeHour = parseInt(dayAvail.close.split(':')[0]);
 
-                  // Create a set of all booked hours
+                  // Create a set of all booked hours using string parsing
                   const bookedHours = new Set();
                   bookedSlots.forEach(slot => {
                     const startHour = parseInt(slot.start_time.split(':')[0]);
@@ -474,8 +463,8 @@ const handleViewReviews = () => {
                   for (let hour = openHour; hour < closeHour; hour++) {
                     if (!bookedHours.has(hour)) {
                       options.push(
-                        <option key={hour} value={`${hour}:00`}>
-                          {`${hour}:00`}
+                        <option key={hour} value={`${hour.toString().padStart(2, '0')}:00:00`}>
+                          {`${hour.toString().padStart(2, '0')}:00:00`}
                         </option>
                       );
                     }
