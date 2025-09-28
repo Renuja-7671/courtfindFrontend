@@ -91,3 +91,18 @@ export const generateInvoiceForArenaAdd = async (arenaId) => {
     throw error; // Propagate the error to be handled by the caller
   }
 };
+
+export const getBookingDetailsForPayment = async (bookingId) => {
+  try {
+    console.log("Fetching booking details for booking ID:", bookingId);
+    const response = await api.get(`/payment/${bookingId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch booking details for payment:", error);
+    throw error; // Propagate the error to be handled by the caller
+  }
+};

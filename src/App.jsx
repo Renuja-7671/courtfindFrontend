@@ -24,9 +24,9 @@ import PlayerProfile from "./views/PlayerProfile";
 import PlayerChangePassword from "./views/PlayerChangePassword";
 import PlayerInvoice from "./views/PlayerInvoice";
 import FeedbackPage from "./views/Feedback";
-import PaymentPage from "./views/paymentPage";
-import PaymentSuccess from "./views/PaymentSuccess";
-import PaymentCancel from "./views/paymentCancel";
+//import PaymentPage from "./views/paymentPage";
+//import PaymentSuccess from "./views/PaymentSuccess";
+//import PaymentCancel from "./views/paymentCancel";
 import PlayerNotifications from "./views/PlayerNotifications";
 
 // Owner Views
@@ -54,6 +54,9 @@ import AdminProfit from "./views/AdminProfit";
 import AdminReviews from "./views/AdminReviews";
 import AdminProfile from "./views/AdminProfile";
 import AdminRequests from "./views/AdminRequests";
+
+import { PaymentSuccess, PaymentCancelled } from './components/PaymentSuccess';
+import PaymentPage from './components/PaymentPage';
 
 // Helper component for wrapping routes with layout
 const withLayout = (Component) => (
@@ -88,10 +91,13 @@ const playerRoutes = [
   { path: "/player-change-password", element: PlayerChangePassword },
   { path: "/player-invoices", element: PlayerInvoice },
   { path: "/feedback/:courtId", element: FeedbackPage },
-  { path: "/payment/:bookingId/:total", element: PaymentPage },
-  { path: "/payment-success/:bookingId/:absoluteAmount", element: PaymentSuccess },
-  { path: "/payment-cancel", element: PaymentCancel },
+  //{ path: "/payment/:bookingId/:total", element: PaymentPage },
+  //{ path: "/payment-success/:bookingId/:absoluteAmount", element: PaymentSuccess },
+  //{ path: "/payment-cancel", element: PaymentCancel },
   { path: "/player-notifications", element: PlayerNotifications },
+  { path: "/payment-success", element: PaymentSuccess },
+  { path: "/payment-cancelled", element: PaymentCancelled },
+  { path: "/payment/:bookingId/:amount", element: PaymentPage }
 ];
 
 const ownerRoutes = [

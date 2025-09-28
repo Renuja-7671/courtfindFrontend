@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "proxy": "sudo node proxy-server.js",
+    "dev-with-proxy": "concurrently \"npm run dev\" \"sleep 3 && sudo node proxy-server.js\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -17,6 +19,7 @@
     "axios": "^1.8.1",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.5.0",
+    "express": "^5.1.0",
     "framer-motion": "^12.23.6",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
@@ -37,10 +40,12 @@
     "@eslint/js": "^9.19.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "concurrently": "^9.2.1",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.18",
-    "globals": "^15.14.0"
+    "globals": "^15.14.0",
+    "http-proxy-middleware": "^3.0.5"
   }
 }
