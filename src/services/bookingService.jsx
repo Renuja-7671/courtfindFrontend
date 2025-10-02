@@ -76,7 +76,7 @@ export const updatePaymentsTable = async (bookingId, ownerId, arenaId, total) =>
     console.error("Failed to update payments table:", error);
     throw error; // Propagate the error to be handled by the caller
   }
-}
+};
 
 export const generateInvoiceForArenaAdd = async (arenaId) => {
   try {

@@ -42,6 +42,8 @@ import ProfitCourtwise from "./views/MyProfitCourtwise";
 import ownerRequests from "./views/ownerRequests";
 import arenaPaymentSuccess from "./views/arenaPaymentSuccess";
 import PaymentArena from "./views/PaymentArena";
+import { OwnerPaymentSuccess, OwnerPaymentCancelled } from './components/OwnerPaymentSuccess';
+import OwnerPaymentPage from "./components/OwnerPaymentPage";
 
 // Admin Views
 import AdminDashboard from "./views/AdminDashboard";
@@ -97,7 +99,7 @@ const playerRoutes = [
   { path: "/player-notifications", element: PlayerNotifications },
   { path: "/payment-success", element: PaymentSuccess },
   { path: "/payment-cancelled", element: PaymentCancelled },
-  { path: "/payment/:bookingId/:amount", element: PaymentPage }
+  { path: "/payment/:bookingId/:amount", element: PaymentPage },
 ];
 
 const ownerRoutes = [
@@ -114,6 +116,9 @@ const ownerRoutes = [
   // Payment routes moved to commonRoutes for testing
   // { path: "/arena-payment/:arenaId/:price", element: PaymentArena },
   // { path: "/arenaPayment-success/:arenaId/:price", element: arenaPaymentSuccess },
+  { path: "/owner-payment-success", element: OwnerPaymentSuccess },
+  { path: "/owner-payment-cancelled", element: OwnerPaymentCancelled },
+  { path: "/owner-payment/:arenaId/:amount", element: OwnerPaymentPage },
 ];
 
 const adminRoutes = [

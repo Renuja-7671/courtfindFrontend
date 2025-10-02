@@ -93,3 +93,37 @@ export const getPaymentMethods = async () => {
     throw error;
   }
 };
+
+//get arena details for payment
+export const getArenaDetailsForPayment = async (arenaId) => {
+  try {
+    const response = await api.get(`/payment/arena-details/${arenaId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch arena details:", error);
+    throw error;
+  }
+};
+
+//update owner payments table
+export const updateOwnerPaymentsTable = async (arenaId, ownerId, amount) => {
+  try {
+    const response = await api.post('/payment/update-owner-payments-table', {
+      arenaId,
+      ownerId,
+      amount
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update owner payments table:", error);
+    throw error; // Propagate the error to be handled by the caller
+  }
+};

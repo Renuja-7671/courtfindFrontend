@@ -6,12 +6,3 @@ export const fetchBookingById = async (bookingId) => {
   return res.data;
 };
 
-// Create Stripe session
-export const createStripeSession = async (bookingId, amount, ownerId) => {
-  const res = await api.post('/stripe/create-checkout-session', {
-    bookingId,
-    amount,
-    ownerId,
-  });
-  return res.data;
-};

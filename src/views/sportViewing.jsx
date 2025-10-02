@@ -170,7 +170,7 @@ const ViewingPage = () => {
       console.log("Booking ID sent for payment:", bookingId); // Debug log
       if (bookingId) {
         alert("Booking Pending! Proceed to payment.");
-        navigate(`/payment/${bookingId}/${bookingData.total_price}`); // Redirect to payment page with bookingId
+        navigate(`/payment-form/${bookingId}/${bookingData.total_price}`); // Redirect to payment page with bookingId
         // Reset form fields
         setSelectedDate('');
         setSelectedTime('');

@@ -2,16 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Row, Col, Button, Spinner, Alert } from 'react-bootstrap';
-import { getBookingDetailsForPayment } from '../services/bookingService';
-import { createPayHereHash, initiatePayHerePayment, verifyPayHerePayment, isPayHereLoaded } from '../services/payhereService';
-import { updatePaymentsTable, getOwnerIdAndArenaIdForBooking } from '../services/bookingService';
+import { createPayHereHash, initiatePayHerePayment, verifyPayHerePayment, isPayHereLoaded, getArenaDetailsForPayment, updateOwnerPaymentsTable } from '../services/payhereService';
 
-const PaymentPage = () => {
-  const { bookingId, amount } = useParams();
+const OwnerPaymentPage = () => {
+  const { arenaId, amount } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState(null);
+  const [arenaDetails, setArenaDetails] = useState(null);
   const [error, setError] = useState('');
   const [paymentHash, setPaymentHash] = useState('');
   const [payHereReady, setPayHereReady] = useState(false);
@@ -25,7 +23,7 @@ const PaymentPage = () => {
       if (isPayHereLoaded()) {
         console.log('PayHere SDK is loaded.');
         setPayHereReady(true);
-        fetchBookingDetails();
+        fetchArenaDetails();
       } else {
         // Retry after a short delay
         setTimeout(checkPayHere, 1000);
@@ -33,18 +31,19 @@ const PaymentPage = () => {
     };
     
     checkPayHere();
-  }, [bookingId]);
+  }, [arenaId]);
 
-  const fetchBookingDetails = async () => {
+  const fetchArenaDetails = async () => {
     try {
-      const details = await getBookingDetailsForPayment(bookingId);
-      setBookingDetails(details);
-      console.log('Booking Details:', details);
+      //get owner details and arena details based on arenaId
+      const details = await getArenaDetailsForPayment(arenaId);
+      setArenaDetails(details);
+      console.log('Arena Details:', details);
       
       // Generate payment hash
       await generatePaymentHash(details);
     } catch (error) {
-      console.error('Error fetching booking details:', error);
+      console.error('Error fetching arena details:', error);
       setError('Failed to load booking details. Please try again.');
     } finally {
       setLoading(false);
@@ -55,7 +54,7 @@ const PaymentPage = () => {
     try {
       const paymentData = {
         merchant_id: MERCHANT_KEY,
-        order_id: `COURT_${bookingId}`,
+        order_id: `ARENA_${arenaId}`,
         amount: parseFloat(amount),
         currency: 'LKR'
       };
@@ -84,32 +83,29 @@ const PaymentPage = () => {
     setError('');
 
     try {
-      // Get owner and arena IDs
-      const { ownerId, arenaId } = await getOwnerIdAndArenaIdForBooking(bookingId);
-
       const paymentConfig = {
         sandbox: true, // Set to false for production
         merchant_id: import.meta.env.VITE_APP_PAYHERE_MERCHANT_ID,
-        return_url: `${window.location.origin}/payment-success`,
-        cancel_url: `${window.location.origin}/payment-cancelled`,
-        notify_url: `${import.meta.env.VITE_API_BASE_URL}/api/payment/payhere-notify`,
-        order_id: `COURT_${bookingId}`,
-        items: `Court Booking - ${bookingDetails.courtName || 'Court'}`,
+        return_url: `${window.location.origin}/owner-payment-success`,
+        cancel_url: `${window.location.origin}/owner-payment-cancelled`,
+        notify_url: `${import.meta.env.VITE_API_BASE_URL}/api/payment/owner/payhere-notify`,
+        order_id: `ARENA_${arenaId}`,
+        items: `Arena adding - ${arenaDetails.name || 'Arena'}`,
         amount: parseFloat(amount).toFixed(2),
         currency: 'LKR',
         hash: paymentHash,
-        first_name: bookingDetails.firstName || 'Customer',
-        last_name: bookingDetails.lastName || '',
-        email: bookingDetails.email || 'customer@example.com',
-        phone: bookingDetails.mobile || '+94771234567',
-        address: bookingDetails.address || 'Colombo',
-        city: bookingDetails.city || 'Colombo',
+        first_name: arenaDetails.owner.firstName || 'Customer',
+        last_name: arenaDetails.owner.lastName || '',
+        email: arenaDetails.owner.email || 'customer@example.com',
+        phone: arenaDetails.owner.mobile || '+94771234567',
+        address: arenaDetails.owner.address || 'Colombo',
+        city: arenaDetails.owner.province || 'Colombo',
         country: 'Sri Lanka',
         delivery_address: '102, Main Street, Colombo',
         delivery_city: 'Colombo',
         delivery_country: 'Sri Lanka',
-        custom_1: bookingId,
-        custom_2: ownerId,
+        custom_1: arenaId,
+        custom_2: arenaDetails.owner.userId,
       };
 
       console.log('Payment Config:', paymentConfig);
@@ -123,12 +119,12 @@ const PaymentPage = () => {
         console.log('Payment completed successfully');
         
         // Update payments table
-        await updatePaymentsTable(bookingId, ownerId, arenaId, amount);
+        await updateOwnerPaymentsTable(arenaId, ownerId, amount);
         
         // Navigate to success page
-        navigate('/payment-success', { 
+        navigate('/owner-payment-success', { 
           state: { 
-            bookingId, 
+            arenaId, 
             orderId: result.orderId,
             amount 
           } 
@@ -157,10 +153,10 @@ const PaymentPage = () => {
     return (
       <Container className="mt-5">
         <Alert variant="danger">
-          <Alert.Heading>Booking Not Found</Alert.Heading>
-          <p>We couldn't find the booking details. Please check your booking ID and try again.</p>
+          <Alert.Heading>Arena Not Found</Alert.Heading>
+          <p>We couldn't find the arena details. Please check your arena ID and try again.</p>
           <Button variant="outline-danger" onClick={() => navigate('/player/bookings')}>
-            View My Bookings
+            View My Arenas
           </Button>
         </Alert>
       </Container>
@@ -192,27 +188,23 @@ const PaymentPage = () => {
               )}
               
               <div className="mb-4">
-                <h5>Booking Summary</h5>
+                <h5>Order Summary</h5>
                 <hr />
                 <Row>
                   <Col sm={6}><strong>Arena:</strong></Col>
-                  <Col sm={6}>{bookingDetails.arenaName}</Col>
+                  <Col sm={6}>{arenaDetails.arenaName}</Col>
                 </Row>
                 <Row>
-                  <Col sm={6}><strong>Court:</strong></Col>
-                  <Col sm={6}>{bookingDetails.courtName}</Col>
+                  <Col sm={6}><strong>City:</strong></Col>
+                  <Col sm={6}>{bookingDetails.city}</Col>
                 </Row>
                 <Row>
                   <Col sm={6}><strong>Date:</strong></Col>
-                  <Col sm={6}>{bookingDetails.bookingDate}</Col>
+                  <Col sm={6}>{arenaDetails.created_at}</Col>
                 </Row>
                 <Row>
-                  <Col sm={6}><strong>Time:</strong></Col>
-                  <Col sm={6}>{bookingDetails.startTime} - {bookingDetails.endTime}</Col>
-                </Row>
-                <Row>
-                  <Col sm={6}><strong>Booking ID:</strong></Col>
-                  <Col sm={6}>#{bookingId}</Col>
+                  <Col sm={6}><strong>Arena ID:</strong></Col>
+                  <Col sm={6}>#{arenaId}</Col>
                 </Row>
                 <hr />
                 <Row>
@@ -275,4 +267,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default OwnerPaymentPage;

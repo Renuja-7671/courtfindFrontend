@@ -163,7 +163,7 @@ const PendingArenasPage = () => {
                       </td>
                       <td>
                         {arena.arenaStatus === "Approved" && (
-                          <Button size="sm" variant="primary" href={`/arena-payment/${arena.arenaId}/${price}`}>
+                          <Button size="sm" variant="primary" href={`/owner-payment/${arena.arenaId}/${price}`}>
                             Pay Now
                           </Button>
                         )}
